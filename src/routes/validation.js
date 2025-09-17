@@ -11,13 +11,13 @@ const userSchema = z.object({
 const pollSchema = z.object({
   question: z.string().min(5, "Question must be at least 5 characters"),
   options: z.array(z.string().min(1)).min(2, "At least 2 options required"),
-  creatorId: z.number(), 
+  creatorId: z.string().uuid(),  
 });
 
 // Vote validation
 const voteSchema = z.object({
-  userId: z.number(),   
-  optionId: z.number(), 
+  userId: z.string().uuid(),   
+  optionId: z.string().uuid(), 
 });
 
 module.exports = { userSchema, pollSchema, voteSchema };

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Live Poll Results</h1>
+    <div id="poll"></div>
+
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+      const socket = io("http://localhost:4000");
+
+      const pollId = "ecfe0604-7c0e-4262-968e-2a35e980a43d";
+      socket.emit("joinPoll", pollId);
+
+      socket.on("pollUpdated", (poll) => {
+        document.getElementById("poll").innerHTML = `
+          <h2>${poll.question}</h2>
+          <ul>
+            ${poll.options
+              .map(
+                (o) => `<li>${o.text}: ${o.votes.length} votes</li>`
+              )
+              .join("")}
+          </ul>
+        `;
+      });
+    </script>
+  </body>
+</html>
